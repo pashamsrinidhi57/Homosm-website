@@ -2,25 +2,26 @@
 const wa = 'https://wa.me/919701105981?text=Hi%20Homasm%20Interiors%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20services.';
 // Each step owns a slice of scroll progress. Keep in sync with STAGES in src/scripts/hero-scene.ts
 const steps = [
-  { n: '01', t: 'Survey & plan', d: 'We measure the site, mark the layout and agree every line before a single wall goes up.' },
-  { n: '02', t: 'Foundation', d: 'A level, true base. Precision here saves weeks later.' },
-  { n: '03', t: 'Structure', d: 'Walls rise to plan, with openings placed for light and views.' },
-  { n: '04', t: 'Services', d: 'Electrical and plumbing routed and tested while the walls are still open.' },
-  { n: '05', t: 'Ceiling & cove', d: 'False ceilings and concealed cove lighting set the mood of every room.' },
-  { n: '06', t: 'Flooring', d: 'Real timber, laid and finished plank by plank.' },
-  { n: '07', t: 'Finishes', d: 'Plaster, paint, fluted wood panelling, glazing and curtains.' },
-  { n: '08', t: 'Furniture & styling', d: 'Made-to-fit pieces arrive, placed and styled.' },
-  { n: '09', t: 'Handover', d: 'Lights on. Keys in hand. No delays, no excuses.' },
+  { n: '01', t: 'The empty shell', d: 'Bare concrete, a single bulb and a window. Every Homasm project starts here, with a site survey and a plan agreed line by line.' },
+  { n: '02', t: 'Electrical & services', d: 'Conduits, points and switch boxes are routed and tested while the walls are still open.' },
+  { n: '03', t: 'False ceiling & cove light', d: 'Gypsum ceilings drop in with concealed LED coves and recessed downlights.' },
+  { n: '04', t: 'Flooring', d: 'Real timber laid and finished plank by plank, from the front of the room to the back.' },
+  { n: '05', t: 'Wall finishes', d: 'Plaster and paint roll up the walls, then the fluted oak feature wall is built rib by rib.' },
+  { n: '06', t: 'Joinery & glazing', d: 'Bronze-framed glazing, sheer curtains and drapes are hung to frame the light.' },
+  { n: '07', t: 'Furniture & styling', d: 'Made-to-fit pieces arrive, placed and styled: seating, rug, art, plants and pendant lights.' },
+  { n: '08', t: 'Handover', d: 'Lights on. Keys in hand. No delays, no excuses.' },
 ];
 ---
 <section class="hero" id="hero" data-hero aria-label="From bare site to finished home">
   <div class="hero__pin">
     <canvas class="hero__canvas" data-canvas aria-hidden="true"></canvas>
     <div class="hero__fallback" data-fallback aria-hidden="true"></div>
+    <div class="hero__veil" aria-hidden="true"></div>
+    <div class="loader" data-loader aria-hidden="true"><span>Preparing your room</span><i><b data-loader-bar></b></i></div>
 
     <div class="intro" data-intro>
       <p class="eyebrow">Homasm Interiors · Hyderabad</p>
-      <h1>We build the room<br /><em>before you live in it.</em></h1>
+      <h1>From an empty shell<br />to a <em>finished home.</em></h1>
       <p class="hint"><span class="hint__line"></span>Scroll to build your home</p>
     </div>
 
@@ -53,12 +54,18 @@ const steps = [
   .hero__pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--bg); }
   .hero__canvas, .hero__fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
   .hero__fallback { display: none; background: radial-gradient(60% 50% at 50% 60%, #f7f3ea, var(--bg)); }
+  .hero__veil { position: absolute; inset: 0; z-index: 2; pointer-events: none; background: linear-gradient(to top, color-mix(in srgb, var(--bg) 86%, transparent) 0%, transparent 34%), linear-gradient(to right, color-mix(in srgb, var(--bg) 70%, transparent) 0%, transparent 38%); transition: opacity 1s var(--ease); }
+  
+  .loader { position: absolute; inset: 0; z-index: 8; display: grid; place-content: center; gap: 1rem; justify-items: center; background: var(--bg); transition: opacity 0.9s var(--ease), visibility 0.9s; font-size: var(--fs-0); letter-spacing: 0.28em; text-transform: uppercase; color: var(--text-muted); }
+  .loader i { display: block; width: 12rem; height: 2px; background: var(--line); overflow: hidden; }
+  .loader b { display: block; height: 100%; background: var(--brand); transform-origin: left; transform: scaleX(0); transition: transform 0.4s var(--ease); }
+  .loader.is-done { opacity: 0; visibility: hidden; }
   .hero.no-webgl .hero__canvas { display: none; }
   .hero.no-webgl .hero__fallback { display: block; }
 
   .eyebrow { font-size: 0.72rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--text-muted); margin: 0 0 1.4rem; }
-  .intro { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-62%); max-width: 56rem; z-index: 5; will-change: opacity, transform; }
-  .intro h1 { font-size: clamp(2.9rem, 6.6vw, 6.2rem); line-height: 0.98; }
+  .intro { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-58%); max-width: 56rem; z-index: 5; will-change: opacity, transform; }
+  .intro h1 { font-size: clamp(2.6rem, 5vw, 5rem); line-height: 1; }
   em { font-style: italic; color: var(--text-accent); }
   .hint { display: flex; align-items: center; gap: 0.9rem; margin: 2.2rem 0 0; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--text-muted); }
   .hint__line { width: 3rem; height: 1px; background: var(--text-muted); transform-origin: left; animation: line 2.4s var(--ease) infinite; }
@@ -70,7 +77,7 @@ const steps = [
   .steps li.is-done { opacity: 0.7; }
   .steps li.is-active { opacity: 1; color: var(--text); transform: translateX(-6px); font-weight: 500; }
 
-  .caption { position: absolute; left: var(--gutter); bottom: 3.2rem; max-width: 25rem; z-index: 4; opacity: 0; transform: translateY(14px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+  .caption { position: absolute; left: var(--gutter); bottom: 2.4rem; max-width: 26rem; padding: 1.2rem 1.5rem 1.3rem; border-radius: 18px; background: color-mix(in srgb, var(--bg) 78%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); z-index: 4; opacity: 0; transform: translateY(14px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
   .caption.is-on { opacity: 1; transform: none; }
   .caption__num { font-size: 0.74rem; letter-spacing: 0.3em; color: var(--text-accent); }
   .caption h2 { font-size: clamp(2.2rem, 4vw, 3.4rem); margin: 0.4rem 0 0.7rem; }
@@ -102,6 +109,6 @@ const steps = [
 </style>
 
 <script>
-  import { initHero } from '../scripts/hero-scene';
-  initHero();
+  import { initRoomHero } from '../scripts/hero-room';
+  initRoomHero();
 </script>
