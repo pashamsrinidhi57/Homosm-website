@@ -1,0 +1,23 @@
+---
+interface Props { title?: string; text?: string }
+const { title = 'Planning your own space?', text = 'Tell us about your space and budget. We reply on WhatsApp the same day, with layouts, materials and timelines.' } = Astro.props;
+const wa = 'https://wa.me/919701105981?text=Hi%20Homasm%20Interiors%2C%20I%20would%20like%20to%20discuss%20my%20project.';
+---
+<section class="cta" data-theme="dark">
+  <div class="cta__in" data-reveal>
+    <p class="eyebrow">Start a project</p>
+    <h2>{title}</h2>
+    <p class="cta__text">{text}</p>
+    <div class="cta__row">
+      <a class="btn btn--primary" href={wa} target="_blank" rel="noopener">Chat on WhatsApp</a>
+      <a class="btn btn--ghost" href="tel:+919701105981">Call +91 97011 05981</a>
+    </div>
+  </div>
+</section>
+<style>
+  .cta { background: var(--bg); color: var(--text); padding: var(--s-9) var(--gutter); text-align: center; }
+  .cta__in { max-width: 46rem; margin: 0 auto; display: grid; gap: var(--s-4); justify-items: center; }
+  .cta h2 { font-size: var(--fs-4); } .cta h2::after { content: ''; display: block; width: 3.5rem; height: 3px; background: var(--brand); margin: var(--s-4) auto 0; }
+  .cta__text { color: var(--text-muted); font-size: var(--fs-2); margin: 0; max-width: 36ch; }
+  .cta__row { display: flex; gap: 0.8rem; flex-wrap: wrap; justify-content: center; margin-top: var(--s-3); }
+</style>

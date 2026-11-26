@@ -24,4 +24,14 @@ em { font-style: italic; color: var(--text-accent); }
 .btn--ghost { background: transparent; color: var(--text); border-color: var(--line-strong); }
 .btn--ghost:hover { border-color: var(--text); }
 
+/* Cross-document view transitions: card image morphs into case-study hero (Chromium, Safari 18.2+) */
+@view-transition { navigation: auto; }
+::view-transition-old(root), ::view-transition-new(root) { animation-duration: 0.5s; animation-timing-function: var(--ease); }
+::view-transition-group(*) { animation-duration: 0.8s; animation-timing-function: var(--ease-cine); }
+
+/* Scroll reveals (only when JS is running) */
+.js [data-reveal] { opacity: 0; transform: translateY(28px); transition: opacity var(--dur-3) var(--ease), transform var(--dur-3) var(--ease); transition-delay: var(--d, 0ms); }
+.js [data-reveal].in { opacity: 1; transform: none; }
+
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; } }
+@media (prefers-reduced-motion: reduce) { .js [data-reveal] { opacity: 1; transform: none; } ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; } }

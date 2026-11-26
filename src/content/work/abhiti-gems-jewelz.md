@@ -1,0 +1,68 @@
+---
+title: "Abhiti Gems & Jewelz"
+order: 7
+kind: commercial
+typology: "Showroom & office"
+styles: ["Commercial"]
+location: "Basheerbagh, Hyderabad"
+scope: "Interior design and execution"
+status: completed
+tagline: "A jewellery showroom designed to feel warm and unhurried."
+summary: "Arched display niches, a brass logo wall and frosted glass entrance in Basheerbagh."
+facts:
+  - label: "Client"
+    value: "Abhiti Gems & Jewelz"
+  - label: "Location"
+    value: "Basheerbagh, Hyderabad"
+  - label: "Scope"
+    value: "Interior design and execution"
+  - label: "Status"
+    value: "Completed"
+challenge:
+  - "A showroom and office that put the jewellery first and feel calm, not crowded."
+approach:
+  - title: "Arched display niches"
+    text: "A pink backdrop frames the pieces."
+  - title: "Clean ceiling"
+    text: "Track lighting keeps the ceiling uncluttered."
+  - title: "Arrival"
+    text: "A brass logo wall and frosted glass entrance set the tone from the door."
+result: "A warm, unhurried showroom and office that frames every piece, completed by Homasm from design through execution."
+cover: "../../assets/work/abhiti-gems-jewelz/01.webp"
+coverAlt: "Abhiti Gems & Jewelz interior"
+gallery:
+  - src: "../../assets/work/abhiti-gems-jewelz/01.webp"
+    alt: "Abhiti Gems & Jewelz, view 1"
+  - src: "../../assets/work/abhiti-gems-jewelz/02.webp"
+    alt: "Abhiti Gems & Jewelz, view 2"
+  - src: "../../assets/work/abhiti-gems-jewelz/03.webp"
+    alt: "Abhiti Gems & Jewelz, view 3"
+  - src: "../../assets/work/abhiti-gems-jewelz/04.webp"
+    alt: "Abhiti Gems & Jewelz, view 4"
+  - src: "../../assets/work/abhiti-gems-jewelz/05.webp"
+    alt: "Abhiti Gems & Jewelz, view 5"
+  - src: "../../assets/work/abhiti-gems-jewelz/06.webp"
+    alt: "Abhiti Gems & Jewelz, view 6"
+  - src: "../../assets/work/abhiti-gems-jewelz/07.webp"
+    alt: "Abhiti Gems & Jewelz, view 7"
+  - src: "../../assets/work/abhiti-gems-jewelz/08.webp"
+    alt: "Abhiti Gems & Jewelz, view 8"
+  - src: "../../assets/work/abhiti-gems-jewelz/09.webp"
+    alt: "Abhiti Gems & Jewelz, view 9"
+  - src: "../../assets/work/abhiti-gems-jewelz/10.webp"
+    alt: "Abhiti Gems & Jewelz, view 10"
+  - src: "../../assets/work/abhiti-gems-jewelz/11.webp"
+    alt: "Abhiti Gems & Jewelz, view 11"
+  - src: "../../assets/work/abhiti-gems-jewelz/12.webp"
+    alt: "Abhiti Gems & Jewelz, view 12"
+  - src: "../../assets/work/abhiti-gems-jewelz/13.webp"
+    alt: "Abhiti Gems & Jewelz, view 13"
+  - src: "../../assets/work/abhiti-gems-jewelz/14.webp"
+    alt: "Abhiti Gems & Jewelz, view 14"
+  - src: "../../assets/work/abhiti-gems-jewelz/15.webp"
+    alt: "Abhiti Gems & Jewelz, view 15"
+  - src: "../../assets/work/abhiti-gems-jewelz/16.webp"
+    alt: "Abhiti Gems & Jewelz, view 16"
+---
+
+

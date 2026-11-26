@@ -1,0 +1,37 @@
+---
+import Logo from './Logo.astro';
+---
+<footer class="footer" data-theme="dark">
+  <div class="footer__top">
+    <div class="footer__brand">
+      <span class="footer__logo"><span class="footer__block"></span><Logo label="Homasm" /></span>
+      <p>Your Interior Execution Partner. Premium interiors, delivered with precision and discipline.</p>
+    </div>
+    <nav aria-label="Footer">
+      <p class="eyebrow">Explore</p>
+      <a href="/work">Work</a><a href="/#services">Services</a><a href="/#process">Process</a><a href="/#about">About</a>
+    </nav>
+    <div>
+      <p class="eyebrow">Talk to us</p>
+      <a href="tel:+919701105981">+91 97011 05981</a>
+      <a href="tel:+919948048111">+91 99480 48111</a>
+      <a href="mailto:info@homasm.com">info@homasm.com</a>
+      <a href="https://www.instagram.com/homasmofficial/" target="_blank" rel="noopener">Instagram</a>
+    </div>
+  </div>
+  <p class="footer__legal">© {new Date().getFullYear()} Homasm Interiors, Hyderabad.</p>
+</footer>
+<style>
+  .footer { background: var(--bg); color: var(--text); padding: var(--s-8) var(--gutter) var(--s-5); }
+  .footer__top { display: grid; grid-template-columns: 1.6fr 1fr 1fr; gap: var(--s-7); max-width: 1280px; margin: 0 auto; }
+  .footer__brand p { color: var(--text-muted); max-width: 34ch; margin: var(--s-4) 0 0; }
+  .footer__logo { position: relative; display: block; width: 9rem; height: 3.6rem; color: var(--text); }
+  .footer__logo :global(svg) { position: relative; width: 100%; height: 100%; display: block; }
+  .footer__block { position: absolute; left: 0; top: -0.6rem; width: 3.9rem; height: 4.5rem; background: var(--brand); }
+  nav, .footer__top > div:last-child { display: grid; gap: 0.5rem; align-content: start; }
+  .footer a { text-decoration: none; color: var(--text-muted); transition: color var(--dur-1); }
+  .footer a:hover { color: var(--brand); }
+  .footer .eyebrow { margin-bottom: var(--s-2); }
+  .footer__legal { max-width: 1280px; margin: var(--s-8) auto 0; padding-top: var(--s-4); border-top: 1px solid var(--line); color: var(--text-subtle); font-size: var(--fs-0); }
+  @media (max-width: 760px) { .footer__top { grid-template-columns: 1fr; gap: var(--s-6); } }
+</style>

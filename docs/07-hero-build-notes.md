@@ -23,3 +23,10 @@ Astro 6 static site. Hero = `src/components/Hero.astro` + `src/scripts/hero-scen
 **Next:** swap procedural furniture for Blender-rendered/GLB assets (see 03/04), add real textures, then build Work, Services, Materials pages.
 
 Run: `npm run dev`
+
+## Work section (v0)
+- `src/content/work/*.md`: one Markdown file per case study (CMS-ready schema in `src/content.config.ts`). Images in `src/assets/work/<slug>/`, optimised to WebP by Astro.
+- `/work`: editorial grid, sticky filters (kind + style, `?style=` deep links), reveal-on-scroll, card image morphs into the case-study hero via native cross-document View Transitions.
+- `/work/[slug]`: curtain-reveal hero with parallax, sticky facts, challenge / what we did / result, masonry gallery with lightbox (keyboard + dialog), testimonial band, next-project link.
+- 301-style redirects for the 14 old `/project*` URLs are in `astro.config.mjs`.
+- **Content caveat:** the 6 residential case studies reuse the images and copy from the live site. Several image filenames look like stock/AI renders (e.g. `pexels-…`, family photo in Studio). Replace with real project photography before launch. Abhiti Gems and CS Luxurio images are real site photos.

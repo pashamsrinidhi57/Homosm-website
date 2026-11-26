@@ -1,0 +1,201 @@
+---
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../../layouts/Base.astro';
+import Header from '../../components/Header.astro';
+import Footer from '../../components/Footer.astro';
+import Cta from '../../components/Cta.astro';
+
+export async function getStaticPaths() {
+  const all = (await getCollection('work')).sort((a, b) => a.data.order - b.data.order);
+  return all.map((entry, i) => ({ params: { slug: entry.id }, props: { entry, next: all[(i + 1) % all.length] } }));
+}
+const { entry, next } = Astro.props;
+const d = entry.data;
+const gallery = d.gallery.filter((g) => g.src.src !== d.cover.src);
+const facts = [
+  { label: 'Type', value: d.typology },
+  { label: 'Location', value: d.location },
+  ...d.facts.filter((f) => !['Location', 'Scope', 'Status'].includes(f.label)),
+  { label: 'Scope', value: d.scope },
+  { label: 'Status', value: d.status === 'completed' ? 'Completed' : 'Work in progress' },
+];
+const wa = `https://wa.me/919701105981?text=${encodeURIComponent(`Hi Homasm, I saw your ${d.title} project and would like something similar.`)}`;
+---
+<Base title={`${d.title} | Homasm Interiors`} description={d.summary}>
+  <Header />
+  <main class="cs">
+    <header class="head">
+      <a class="back" href="/work" data-reveal>← All work</a>
+      <p class="eyebrow" data-reveal>{d.typology} · {d.location}</p>
+      <h1 data-reveal style="--d:70ms">{d.title}</h1>
+      <p class="tag" data-reveal style="--d:140ms">{d.tagline}</p>
+    </header>
+
+    <figure class="hero" data-hero-img>
+      <Image src={d.cover} alt={d.coverAlt} widths={[800, 1200, 1800, 2400]} sizes="100vw" loading="eager" fetchpriority="high" style={`view-transition-name: work-${entry.id}`} />
+    </figure>
+
+    <section class="story">
+      <aside class="facts" data-reveal>
+        <dl>{facts.map((f) => <div><dt>{f.label}</dt><dd>{f.value}</dd></div>)}</dl>
+        {d.styles.length > 0 && <ul class="styles">{d.styles.map((s) => <li><a href={`/work?style=${encodeURIComponent(s.toLowerCase())}`}>{s}</a></li>)}</ul>}
+        <a class="btn btn--primary" href={wa} target="_blank" rel="noopener">I want something like this</a>
+      </aside>
+
+      <div class="prose">
+        {d.challenge.length > 0 && (
+          <section data-reveal>
+            <p class="eyebrow">01 · The challenge</p>
+            <ol class="challenge">{d.challenge.map((c) => <li>{c}</li>)}</ol>
+          </section>
+        )}
+        {d.approach.length > 0 && (
+          <section data-reveal>
+            <p class="eyebrow">02 · What we did</p>
+            <div class="approach">{d.approach.map((a, i) => <article><span>{String(i + 1).padStart(2, '0')}</span><h3>{a.title}</h3><p>{a.text}</p></article>)}</div>
+          </section>
+        )}
+        <section data-reveal>
+          <p class="eyebrow">{d.approach.length > 0 ? '03' : '02'} · The result</p>
+          <p class="result">{d.result}</p>
+        </section>
+      </div>
+    </section>
+
+    {gallery.length > 0 && (
+      <section class="gallery" aria-label="Project gallery">
+        <div class="gallery__head" data-reveal><h2>Inside the project</h2><p class="eyebrow">{gallery.length} photos</p></div>
+        <div class="masonry">
+          {gallery.map((g, i) => (
+            <button class="shot" type="button" data-reveal style={`--d:${(i % 3) * 80}ms`} aria-label={`Open photo ${i + 1} of ${gallery.length}`}>
+              <Image src={g.src} alt={g.alt} widths={[400, 700, 1000, 1800]} sizes="(min-width: 980px) 33vw, (min-width: 520px) 50vw, 100vw" loading="lazy" />
+            </button>
+          ))}
+        </div>
+      </section>
+    )}
+
+    {d.quote && (
+      <section class="quote" data-reveal>
+        <blockquote><p>“{d.quote.text}”</p><footer>{d.quote.by}</footer></blockquote>
+      </section>
+    )}
+
+    <a class="next" href={`/work/${next.id}`} data-reveal>
+      <div class="next__txt"><p class="eyebrow">Next project</p><h2>{next.data.title}</h2><span class="next__go">View case study →</span></div>
+      <div class="next__img"><Image src={next.data.cover} alt={next.data.coverAlt} widths={[500, 900]} sizes="(min-width: 980px) 50vw, 100vw" loading="lazy" /></div>
+    </a>
+  </main>
+  <Cta />
+  <Footer />
+
+  <dialog class="lb" data-lb aria-label="Photo viewer">
+    <button class="lb__x" data-close aria-label="Close">×</button>
+    <button class="lb__n lb__n--p" data-prev aria-label="Previous photo">←</button>
+    <img data-lb-img alt="" />
+    <button class="lb__n lb__n--n" data-next aria-label="Next photo">→</button>
+    <p class="lb__cap" data-lb-cap></p>
+  </dialog>
+</Base>
+
+<style>
+  .cs { padding-top: 7rem; }
+  .head { max-width: 1380px; margin: 0 auto; padding: 0 var(--gutter) var(--s-6); display: grid; gap: var(--s-3); }
+  .back { text-decoration: none; color: var(--text-muted); font-size: var(--fs-0); justify-self: start; margin-bottom: var(--s-4); }
+  .back:hover { color: var(--text); }
+  h1 { font-size: var(--fs-5); }
+  .tag { font-family: var(--font-display); font-style: italic; font-size: var(--fs-3); color: var(--text-accent); margin: 0; max-width: 30ch; line-height: 1.15; }
+
+  .hero { margin: 0; height: min(82vh, 56vw); min-height: 22rem; overflow: hidden; background: var(--bg-sunken); animation: curtain 1.4s var(--ease-cine) both; }
+  .hero :global(img) { width: 100%; height: 118%; object-fit: cover; display: block; will-change: transform; transform: translate3d(0, var(--py, 0px), 0); }
+  @keyframes curtain { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+
+  .story { max-width: 1380px; margin: 0 auto; padding: var(--s-8) var(--gutter); display: grid; grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr); gap: var(--s-8); align-items: start; }
+  .facts { position: sticky; top: 6.5rem; display: grid; gap: var(--s-5); }
+  .facts dl { margin: 0; display: grid; }
+  .facts dl div { display: flex; justify-content: space-between; gap: var(--s-4); padding: 0.8rem 0; border-top: 1px solid var(--line); }
+  .facts dl div:last-child { border-bottom: 1px solid var(--line); }
+  .facts dt { color: var(--text-muted); font-size: var(--fs-0); } .facts dd { margin: 0; text-align: right; font-weight: 500; }
+  .styles { list-style: none; margin: 0; padding: 0; display: flex; gap: 0.4rem; flex-wrap: wrap; }
+  .styles a { display: inline-block; text-decoration: none; font-size: var(--fs-0); padding: 0.35rem 0.8rem; border: 1px solid var(--line-strong); border-radius: var(--radius-pill); }
+  .styles a:hover { background: var(--brand); border-color: var(--brand); color: var(--on-brand); }
+
+  .prose { display: grid; gap: var(--s-8); }
+  .prose section { display: grid; gap: var(--s-4); }
+  .challenge { margin: 0; padding: 0; list-style: none; counter-reset: c; display: grid; gap: var(--s-4); }
+  .challenge li { counter-increment: c; display: grid; grid-template-columns: 2.4rem 1fr; font-size: var(--fs-2); line-height: 1.45; }
+  .challenge li::before { content: counter(c); font-family: var(--font-display); color: var(--text-accent); font-size: 1.6rem; line-height: 1; }
+  .approach { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: var(--s-5); }
+  .approach article { padding: var(--s-5); border-radius: var(--radius-l); background: var(--bg-raised); box-shadow: var(--shadow-1); display: grid; gap: 0.5rem; align-content: start; }
+  .approach span { color: var(--text-accent); font-size: var(--fs-0); letter-spacing: 0.2em; }
+  .approach h3 { font-size: var(--fs-2); } .approach p { margin: 0; color: var(--text-muted); font-size: var(--fs-0); }
+  .result { font-family: var(--font-display); font-size: var(--fs-3); line-height: 1.25; margin: 0; max-width: 34ch; }
+
+  .gallery { max-width: 1380px; margin: 0 auto; padding: var(--s-7) var(--gutter) var(--s-8); }
+  .gallery__head { display: flex; justify-content: space-between; align-items: end; margin-bottom: var(--s-5); border-top: 1px solid var(--line); padding-top: var(--s-5); }
+  .gallery h2 { font-size: var(--fs-3); }
+  .masonry { columns: 3; column-gap: var(--s-4); }
+  .shot { display: block; width: 100%; margin: 0 0 var(--s-4); padding: 0; border: 0; background: var(--bg-sunken); border-radius: var(--radius-m); overflow: hidden; cursor: zoom-in; break-inside: avoid; }
+  .shot :global(img) { width: 100%; height: auto; display: block; transition: transform 1.2s var(--ease); }
+  .shot:hover :global(img) { transform: scale(1.04); }
+
+  .quote { background: var(--brand); color: var(--on-brand); padding: var(--s-9) var(--gutter); }
+  .quote blockquote { max-width: 56rem; margin: 0 auto; }
+  .quote p { font-family: var(--font-display); font-size: var(--fs-4); line-height: 1.1; margin: 0 0 var(--s-5); }
+  .quote footer { font-size: var(--fs-0); letter-spacing: 0.2em; text-transform: uppercase; }
+
+  .next { display: grid; grid-template-columns: 1fr 1fr; align-items: stretch; text-decoration: none; color: var(--text); background: var(--bg-sunken); }
+  .next__txt { padding: var(--s-8) var(--gutter); display: grid; align-content: center; gap: var(--s-3); }
+  .next h2 { font-size: var(--fs-4); } .next__go { font-weight: 600; border-bottom: 2px solid var(--brand); justify-self: start; }
+  .next__img { overflow: hidden; min-height: 18rem; } .next__img :global(img) { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); display: block; } .next:hover .next__img :global(img) { transform: scale(1.05); }
+
+  .lb { border: 0; padding: 0; background: rgb(14 10 8 / 0.94); color: #fff; width: 100vw; max-width: none; height: 100dvh; max-height: none; }
+  .lb[open] { display: grid; place-items: center; }
+  .lb::backdrop { background: rgb(14 10 8 / 0.9); }
+  .lb img { max-width: 92vw; max-height: 84vh; object-fit: contain; border-radius: 6px; }
+  .lb button { position: absolute; background: rgb(255 255 255 / 0.12); color: #fff; border: 0; width: 3rem; height: 3rem; border-radius: 50%; font-size: 1.4rem; cursor: pointer; transition: background var(--dur-1); }
+  .lb button:hover { background: var(--brand); color: var(--on-brand); }
+  .lb__x { top: 1rem; right: 1rem; } .lb__n--p { left: 1rem; } .lb__n--n { right: 1rem; }
+  .lb__cap { position: absolute; bottom: 1rem; margin: 0; font-size: var(--fs-0); color: rgb(255 255 255 / 0.7); }
+
+  @media (max-width: 980px) { .story { grid-template-columns: 1fr; gap: var(--s-6); } .facts { position: static; } .masonry { columns: 2; } .next { grid-template-columns: 1fr; } }
+  @media (max-width: 520px) { .masonry { columns: 1; } }
+  @media (prefers-reduced-motion: reduce) { .hero { animation: none; } .hero :global(img) { height: 100%; } }
+</style>
+
+<script>
+  // hero parallax
+  const hero = document.querySelector<HTMLElement>('[data-hero-img]');
+  if (hero && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    let tick = false;
+    const run = () => {
+      const r = hero.getBoundingClientRect();
+      const p = Math.min(1, Math.max(0, -r.top / Math.max(1, r.height)));
+      hero.style.setProperty('--py', `${-p * hero.clientHeight * 0.12}px`);
+      tick = false;
+    };
+    addEventListener('scroll', () => { if (!tick) { tick = true; requestAnimationFrame(run); } }, { passive: true });
+  }
+
+  // lightbox
+  const dlg = document.querySelector<HTMLDialogElement>('[data-lb]')!;
+  const big = dlg.querySelector<HTMLImageElement>('[data-lb-img]')!;
+  const cap = dlg.querySelector<HTMLElement>('[data-lb-cap]')!;
+  const shots = [...document.querySelectorAll<HTMLButtonElement>('.shot')];
+  let cur = 0;
+  const show = (i: number) => {
+    cur = (i + shots.length) % shots.length;
+    const img = shots[cur].querySelector('img')!;
+    const set = img.srcset.split(',').map((s) => s.trim().split(' ')[0]).filter(Boolean);
+    big.src = set[set.length - 1] || img.currentSrc || img.src;
+    big.alt = img.alt;
+    cap.textContent = `${cur + 1} / ${shots.length}`;
+  };
+  shots.forEach((b, i) => b.addEventListener('click', () => { show(i); dlg.showModal(); }));
+  dlg.querySelector('[data-close]')!.addEventListener('click', () => dlg.close());
+  dlg.querySelector('[data-prev]')!.addEventListener('click', () => show(cur - 1));
+  dlg.querySelector('[data-next]')!.addEventListener('click', () => show(cur + 1));
+  dlg.addEventListener('click', (e) => { if (e.target === dlg) dlg.close(); });
+  dlg.addEventListener('keydown', (e) => { if (e.key === 'ArrowRight') show(cur + 1); if (e.key === 'ArrowLeft') show(cur - 1); });
+</script>
