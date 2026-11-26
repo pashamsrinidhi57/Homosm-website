@@ -1,0 +1,9 @@
+---
+// Signature-script mark. Inherits colour via currentColor so it works on cream, saffron and ink.
+import d from './script-path.txt?raw';
+interface Props { class?: string; label?: string }
+const { class: cls = '', label = 'Homasm' } = Astro.props;
+---
+<svg class={cls} viewBox="30 170 840 420" role="img" aria-label={label} fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+  <path d={d} fill-rule="evenodd" clip-rule="evenodd" />
+</svg>

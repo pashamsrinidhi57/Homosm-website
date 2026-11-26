@@ -151,7 +151,7 @@ export function initHero() {
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let renderer: THREE.WebGLRenderer;
   try {
-    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, powerPreference: 'high-performance' });
+    renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true, powerPreference: 'high-performance' });
   } catch {
     root.classList.add('no-webgl');
     return;
@@ -164,10 +164,9 @@ export function initHero() {
   renderer.toneMappingExposure = 1.05;
   renderer.localClippingEnabled = true;
 
-  const BG = new THREE.Color('#efebe3');
+  const BG = new THREE.Color('#F9F2ED');
   const scene = new THREE.Scene();
-  scene.background = BG;
-  scene.fog = new THREE.Fog(BG, 28, 60);
+  renderer.setClearColor(BG, 0); // transparent: page cream shows through, un-tonemapped
 
   const pmrem = new THREE.PMREMGenerator(renderer);
   scene.environment = pmrem.fromScene(new RoomEnvironment(), 0.04).texture;
@@ -212,7 +211,7 @@ export function initHero() {
   /* ground */
   const ground = new THREE.Mesh(
     new THREE.CircleGeometry(60, 64),
-    new THREE.MeshStandardMaterial({ color: '#e8e3d9', roughness: 1 }),
+    new THREE.ShadowMaterial({ color: '#2d2823', opacity: 0.16 }),
   );
   ground.rotation.x = -Math.PI / 2;
   ground.position.y = -0.31;
@@ -250,10 +249,10 @@ export function initHero() {
   const planGeo = new THREE.BufferGeometry().setFromPoints(
     planPts.flatMap(([a, b, c, d]) => [new THREE.Vector3(a, -0.28, b), new THREE.Vector3(c, -0.28, d)]),
   );
-  const planLines = new THREE.LineSegments(planGeo, new THREE.LineBasicMaterial({ color: '#a8764a', transparent: true, opacity: 0 }));
+  const planLines = new THREE.LineSegments(planGeo, new THREE.LineBasicMaterial({ color: '#D89533', transparent: true, opacity: 0 }));
   scene.add(planLines);
   // corner pegs
-  const pegMat = new THREE.MeshStandardMaterial({ color: '#a8764a', roughness: 0.6 });
+  const pegMat = new THREE.MeshStandardMaterial({ color: '#FDB041', roughness: 0.6 });
   const pegs = corners.slice(0, 4).map(([x, z]) => {
     const m = new THREE.Mesh(new THREE.CylinderGeometry(0.05, 0.05, 0.9, 12), pegMat);
     m.position.set(x, 0.15, z);
@@ -323,7 +322,7 @@ export function initHero() {
     }
     // raw concrete -> warm plaster paint
     const paint = easeInOut(sub(STAGES.finish, 0, 0.45, p));
-    wallMat.color.set('#8a8782').lerp(new THREE.Color('#f6f1e8'), paint);
+    wallMat.color.set('#8a8782').lerp(new THREE.Color('#FBF6EF'), paint);
     wallMat.roughness = 0.92 - paint * 0.2;
     slabMat.color.set('#9c9890').lerp(new THREE.Color('#9c9890'), 0);
   });
@@ -527,7 +526,7 @@ export function initHero() {
   const armR = rb(0.28, 0.58, 1.0, boucle, 0.1); armR.position.set(1.28, 0.5, 0.05);
   const c1 = rb(1.15, 0.2, 0.85, cushion, 0.09); c1.position.set(-0.6, 0.62, 0.12);
   const c2 = c1.clone(); c2.position.x = 0.6;
-  const pillow = rb(0.5, 0.45, 0.14, new THREE.MeshStandardMaterial({ color: '#a8764a', roughness: 1 }), 0.06);
+  const pillow = rb(0.5, 0.45, 0.14, new THREE.MeshStandardMaterial({ color: '#D89533', roughness: 1 }), 0.06);
   pillow.position.set(-0.95, 0.88, -0.1); pillow.rotation.set(-0.2, 0.2, 0.1);
   const legs = [[-1.2, -0.35], [1.2, -0.35], [-1.2, 0.45], [1.2, 0.45]].map(([x, z]) => {
     const l = new THREE.Mesh(new THREE.CylinderGeometry(0.03, 0.025, 0.14, 10), oak);

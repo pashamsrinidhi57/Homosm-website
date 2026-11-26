@@ -1,0 +1,122 @@
+---
+import Base from '../layouts/Base.astro';
+import Logo from '../components/Logo.astro';
+import Wordmark from '../components/Wordmark.astro';
+const saffron = [50,100,200,300,400,500,600,700,800,900,950];
+const ink = [0,50,100,200,300,400,500,600,700,800,900,950];
+const semantic = [
+  ['--bg','Page background'],['--bg-raised','Cards, inputs'],['--bg-sunken','Alt sections'],['--bg-inverse','Dark sections'],
+  ['--text','Primary text'],['--text-muted','Secondary text'],['--text-accent','Accent text (AA)'],['--brand','Brand / fills'],['--on-brand','Text on brand'],
+];
+---
+<Base title="Design system | Homasm" description="Homasm colour, type and component tokens.">
+  <main class="ds">
+    <header class="ds__head">
+      <p class="eyebrow">Homasm design system · v0.1</p>
+      <h1>Saffron, ink &amp; <em>signature.</em></h1>
+      <p class="lede">Light, editorial and warm. One confident saffron taken straight from the logo block, set against near-black ink and a creamy paper neutral.</p>
+    </header>
+
+    <section>
+      <h2>Logo</h2>
+      <div class="logos">
+        <div class="logo-card" style="background:var(--bg-raised)"><div class="block"></div><Logo class="mark" /></div>
+        <div class="logo-card" style="background:var(--brand)"><Logo class="mark" /></div>
+        <div class="logo-card" data-theme="dark"><Logo class="mark" /></div>
+        <div class="logo-card" style="background:var(--bg-raised)"><Wordmark /></div>
+      </div>
+      <p class="note">Script mark inherits <code>currentColor</code>. Use ink on cream or saffron, cream on ink. Clear space = height of the “H” crossbar. Never recolour the saffron block.</p>
+    </section>
+
+    <section>
+      <h2>Brand colour: Saffron</h2>
+      <div class="scale">{saffron.map((k) => <div class="sw" style={`background:var(--saffron-${k});color:${k<=400||k===500?'var(--ink-950)':'var(--ink-50)'}`}><b>{k}</b><span>--saffron-{k}</span></div>)}</div>
+      <h2>Neutral: Ink</h2>
+      <div class="scale scale--12">{ink.map((k) => <div class="sw" style={`background:var(--ink-${k});color:${k<=300?'var(--ink-950)':'var(--ink-50)'}`}><b>{k}</b><span>--ink-{k}</span></div>)}</div>
+      <h2>Semantic roles</h2>
+      <div class="roles">{semantic.map(([v,d]) => <div class="role"><i style={`background:var(${v})`}></i><div><code>{v}</code><span>{d}</span></div></div>)}</div>
+      <h3>Contrast (WCAG)</h3>
+      <table>
+        <thead><tr><th>Pair</th><th>Ratio</th><th>Use</th></tr></thead>
+        <tbody>
+          <tr><td>ink-950 on saffron-500</td><td>10.8 : 1</td><td>Buttons, logo block text. AAA</td></tr>
+          <tr><td>ink-950 on ink-50</td><td>17.8 : 1</td><td>Body text. AAA</td></tr>
+          <tr><td>ink-600 on ink-50</td><td>6.2 : 1</td><td>Muted text. AA</td></tr>
+          <tr><td>saffron-800 on ink-50</td><td>6.0 : 1</td><td>Accent text on light. AA</td></tr>
+          <tr><td>saffron-500 on ink-950</td><td>10.8 : 1</td><td>Accent text on dark. AAA</td></tr>
+          <tr class="bad"><td>saffron-500 on ink-50</td><td>1.7 : 1</td><td>Never for text. Fills and highlights only</td></tr>
+          <tr class="bad"><td>white on saffron-500</td><td>1.8 : 1</td><td>Never. Always ink on saffron</td></tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>Typography</h2>
+      <div class="type">
+        <p class="eyebrow">Display: Cormorant (matches the serif wordmark)</p>
+        <p class="t5">Rooms built <em>with precision</em></p>
+        <p class="t4">Discipline. Precision. Trust.</p>
+        <p class="t3">Modular kitchens made to fit</p>
+        <p class="eyebrow">Body &amp; UI: Cabin (matches the tagline)</p>
+        <p class="t2">We deliver premium interiors with precision and discipline.</p>
+        <p>Complete design and execution, from plan to handover. No delays, no excuses, only precision. Body copy is 17px / 1.6 with a 62ch measure.</p>
+        <p class="t0">SMALL CAPTION · 0.28em TRACKING · CABIN</p>
+        <p class="note">The signature script is reserved for the logo. Never set text in a script face.</p>
+      </div>
+    </section>
+
+    <section>
+      <h2>Components</h2>
+      <div class="row">
+        <a class="btn btn--primary" href="#">Chat on WhatsApp</a>
+        <a class="btn btn--solid" href="#">Book a consultation</a>
+        <a class="btn btn--ghost" href="#">View projects</a>
+      </div>
+      <div class="row" data-theme="dark" style="padding:1.5rem;border-radius:var(--radius-l)">
+        <a class="btn btn--primary" href="#">Chat on WhatsApp</a>
+        <a class="btn btn--ghost" href="#">View projects</a>
+        <span style="color:var(--text-muted)">on dark</span>
+      </div>
+      <div class="cards">
+        <article class="card"><p class="eyebrow">Full home</p><h3>3 BHK, Kondapur</h3><p>Warm oak, fluted panelling, concealed cove light.</p></article>
+        <article class="card card--brand"><p class="eyebrow">Our promise</p><h3>No delays. No excuses.</h3><p>Only precision.</p></article>
+      </div>
+    </section>
+
+    <section>
+      <h2>Motion</h2>
+      <p>Cinematic means slow, weighty, never bouncy. <code>--ease</code> cubic-bezier(.22,1,.36,1) for reveals; <code>--ease-cine</code> cubic-bezier(.65,0,.35,1) for scroll-scrubbed camera moves. Durations: 0.25 / 0.5 / 0.9 / 1.4 s. Reduced motion removes all transitions.</p>
+    </section>
+  </main>
+</Base>
+
+<style>
+  .ds { max-width: 1180px; margin: 0 auto; padding: 5rem var(--gutter) 8rem; display: grid; gap: 5rem; }
+  .ds__head h1 { font-size: var(--fs-5); margin: 1rem 0; }
+  .lede { font-size: var(--fs-2); color: var(--text-muted); max-width: 46ch; margin: 0; }
+  section { display: grid; gap: 1.5rem; }
+  h2 { font-size: var(--fs-3); border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  h3 { font-size: var(--fs-2); }
+  code { font-size: 0.85em; background: var(--bg-sunken); padding: 0.1em 0.4em; border-radius: 4px; }
+  .note { color: var(--text-muted); font-size: var(--fs-0); margin: 0; max-width: 70ch; }
+  .logos { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; }
+  .logo-card { position: relative; aspect-ratio: 4 / 3; display: grid; place-items: center; border-radius: var(--radius-m); border: 1px solid var(--line); overflow: hidden; background: var(--bg); color: var(--text); }
+  .logo-card .mark { width: 78%; position: relative; }
+  .logo-card .block { position: absolute; left: 12%; top: 0; bottom: 0; width: 34%; background: var(--brand); }
+  .scale { display: grid; grid-template-columns: repeat(11, 1fr); border-radius: var(--radius-m); overflow: hidden; }
+  .scale--12 { grid-template-columns: repeat(12, 1fr); }
+  .sw { display: grid; align-content: end; gap: 0.2rem; min-height: 9rem; padding: 0.7rem; font-size: 0.7rem; }
+  .sw b { font-size: 0.95rem; } .sw span { opacity: 0.8; word-break: break-all; }
+  .roles { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 0.8rem; }
+  .role { display: flex; gap: 0.8rem; align-items: center; } .role i { width: 2.6rem; height: 2.6rem; border-radius: 8px; border: 1px solid var(--line); flex: none; }
+  .role div { display: grid; font-size: 0.8rem; } .role span { color: var(--text-muted); }
+  table { width: 100%; border-collapse: collapse; font-size: 0.9rem; } th, td { text-align: left; padding: 0.7rem 0.5rem; border-bottom: 1px solid var(--line); } th { color: var(--text-muted); font-weight: 600; }
+  tr.bad td:nth-child(2) { color: var(--danger); font-weight: 600; }
+  .type p { margin: 0 0 0.6rem; } .t5 { font-family: var(--font-display); font-size: var(--fs-5); line-height: 1; } .t4 { font-family: var(--font-display); font-size: var(--fs-4); line-height: 1.05; } .t3 { font-family: var(--font-display); font-size: var(--fs-3); } .t2 { font-size: var(--fs-2); } .t0 { font-size: var(--fs-0); letter-spacing: 0.28em; color: var(--text-muted); }
+  .type .eyebrow { margin-top: 1.5rem; }
+  .row { display: flex; gap: 0.8rem; flex-wrap: wrap; align-items: center; }
+  .cards { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 1rem; }
+  .card { padding: 1.8rem; border-radius: var(--radius-l); background: var(--bg-raised); box-shadow: var(--shadow-1); display: grid; gap: 0.6rem; align-content: start; }
+  .card p { margin: 0; color: var(--text-muted); } .card--brand { background: var(--brand); color: var(--on-brand); } .card--brand p { color: var(--on-brand); }
+  @media (max-width: 760px) { .scale, .scale--12 { grid-template-columns: repeat(4, 1fr); } }
+</style>

@@ -1,0 +1,11 @@
+---
+// Typeset lockup matching the brand sheet: serif wordmark + sans tagline.
+interface Props { tagline?: boolean }
+const { tagline = true } = Astro.props;
+---
+<span class="wm"><span class="wm__name">Homasm</span>{tagline && <span class="wm__tag">Your Interior Execution Partner</span>}</span>
+<style>
+  .wm { display: inline-flex; flex-direction: column; line-height: 1; }
+  .wm__name { font-family: var(--font-display); font-weight: 400; font-size: 1.9rem; letter-spacing: 0.01em; }
+  .wm__tag { font-family: var(--font-body); font-size: 0.62rem; letter-spacing: 0.04em; margin-top: 0.35rem; color: var(--text-muted); }
+</style>

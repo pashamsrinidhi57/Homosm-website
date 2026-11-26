@@ -1,0 +1,75 @@
+:root {
+  /* ===== Primitives (generated in OKLCH from brand saffron #FDB041) ===== */
+  --saffron-50: #FFF6EC;
+  --saffron-100: #FFEDD8;
+  --saffron-200: #FFDFB9;
+  --saffron-300: #FFCE91;
+  --saffron-400: #FEC172;
+  --saffron-500: #FDB041;
+  --saffron-600: #D89533;
+  --saffron-700: #AB731E;
+  --saffron-800: #7E5415;
+  --saffron-900: #57390A;
+  --saffron-950: #331F03;
+  --ink-0: #FFFBF8;
+  --ink-50: #F9F2ED;
+  --ink-100: #F0E8E2;
+  --ink-200: #E1D9D2;
+  --ink-300: #CBC2BB;
+  --ink-400: #A69D95;
+  --ink-500: #827871;
+  --ink-600: #625952;
+  --ink-700: #463E38;
+  --ink-800: #2D2823;
+  --ink-900: #191511;
+  --ink-950: #0E0A08;
+
+  /* ===== Semantic (light theme = default) ===== */
+  --bg: var(--ink-50);
+  --bg-raised: var(--ink-0);
+  --bg-sunken: var(--ink-100);
+  --bg-inverse: var(--ink-950);
+  --text: var(--ink-950);
+  --text-muted: var(--ink-600);
+  --text-subtle: var(--ink-500);
+  --text-inverse: var(--ink-50);
+  --text-accent: var(--saffron-800);   /* AA on cream (5.99:1) */
+  --line: color-mix(in srgb, var(--ink-950) 14%, transparent);
+  --line-strong: color-mix(in srgb, var(--ink-950) 32%, transparent);
+  --brand: var(--saffron-500);         /* logo block, fills, highlights */
+  --brand-hover: var(--saffron-400);
+  --on-brand: var(--ink-950);          /* 10.8:1 on saffron-500 */
+  --focus: var(--saffron-700);
+  --success: #3F7D58; --danger: #B3402E;
+
+  /* ===== Type ===== */
+  --font-display: 'Cormorant Variable', 'Cormorant Garamond', Georgia, serif;
+  --font-body: 'Cabin Variable', 'Gill Sans', system-ui, sans-serif;
+  --fs-0: clamp(0.8rem, 0.78rem + 0.1vw, 0.875rem);
+  --fs-1: clamp(0.95rem, 0.92rem + 0.15vw, 1.0625rem);
+  --fs-2: clamp(1.15rem, 1.05rem + 0.5vw, 1.45rem);
+  --fs-3: clamp(1.6rem, 1.3rem + 1.4vw, 2.5rem);
+  --fs-4: clamp(2.2rem, 1.6rem + 3vw, 4.25rem);
+  --fs-5: clamp(2.8rem, 1.6rem + 5.4vw, 6.5rem);
+
+  /* ===== Space / shape / motion ===== */
+  --s-1: 0.25rem; --s-2: 0.5rem; --s-3: 0.75rem; --s-4: 1rem; --s-5: 1.5rem; --s-6: 2rem; --s-7: 3rem; --s-8: 4.5rem; --s-9: 7rem;
+  --gutter: clamp(16px, 4vw, 56px);
+  --radius-s: 4px; --radius-m: 10px; --radius-l: 20px; --radius-pill: 999px;
+  --shadow-1: 0 1px 2px rgb(14 10 8 / 0.06), 0 6px 18px rgb(14 10 8 / 0.06);
+  --shadow-2: 0 2px 4px rgb(14 10 8 / 0.08), 0 18px 48px rgb(14 10 8 / 0.14);
+  --ease: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-cine: cubic-bezier(0.65, 0, 0.35, 1);
+  --dur-1: 0.25s; --dur-2: 0.5s; --dur-3: 0.9s; --dur-4: 1.4s;
+}
+
+/* Dark theme: opt in per section with [data-theme='dark'] */
+[data-theme='dark'] {
+  --bg: var(--ink-950); --bg-raised: var(--ink-900); --bg-sunken: var(--ink-950); --bg-inverse: var(--ink-50);
+  --text: var(--ink-50); --text-muted: var(--ink-300); --text-subtle: var(--ink-400); --text-inverse: var(--ink-950);
+  --text-accent: var(--saffron-500);   /* 10.8:1 on ink-950 */
+  --line: color-mix(in srgb, var(--ink-50) 16%, transparent);
+  --line-strong: color-mix(in srgb, var(--ink-50) 34%, transparent);
+  --focus: var(--saffron-400);
+  color: var(--text); background: var(--bg);
+}

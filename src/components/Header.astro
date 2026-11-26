@@ -1,8 +1,12 @@
 ---
+import Logo from './Logo.astro';
 const wa = 'https://wa.me/919701105981?text=Hi%20Homasm%20Interiors%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20services.';
 ---
 <header class="site-header">
-  <a class="brand" href="/" aria-label="Homasm Interiors, home">HOMASM<span>Interiors</span></a>
+  <a class="brand" href="/" aria-label="Homasm, Your Interior Execution Partner">
+    <span class="brand__block" aria-hidden="true"></span>
+    <span class="brand__logo"><Logo label="Homasm" /></span>
+  </a>
   <nav aria-label="Primary">
     <a href="#work">Work</a>
     <a href="#services">Services</a>
@@ -11,22 +15,25 @@ const wa = 'https://wa.me/919701105981?text=Hi%20Homasm%20Interiors%2C%20I%20wou
   </nav>
   <div class="actions">
     <a class="call" href="tel:+919701105981">+91 97011 05981</a>
-    <a class="btn btn--solid" href={wa} target="_blank" rel="noopener">WhatsApp us</a>
+    <a class="btn btn--primary" href={wa} target="_blank" rel="noopener">WhatsApp us</a>
   </div>
 </header>
 <style>
   .site-header {
     position: fixed; inset: 0 0 auto 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
-    gap: 1.5rem; padding: 1.1rem var(--gutter); mix-blend-mode: normal;
-    background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 85%, transparent), transparent);
+    gap: 1.5rem; padding: 0.9rem var(--gutter);
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 88%, transparent), transparent);
   }
-  .brand { text-decoration: none; font: 600 1.05rem/1 var(--sans); letter-spacing: 0.22em; display: flex; flex-direction: column; gap: 0.3rem; }
-  .brand span { font-weight: 400; font-size: 0.6rem; letter-spacing: 0.4em; color: var(--ink-2); text-transform: uppercase; }
+  .brand { position: relative; display: block; width: 8.4rem; height: 3.2rem; text-decoration: none; color: var(--text); }
+  /* saffron block from the logo, cropped like the original */
+  .brand__block { position: absolute; left: 0; top: -0.9rem; width: 3.6rem; height: 4.1rem; background: var(--brand); }
+  .brand__logo { position: absolute; inset: 0; display: block; }
+  .brand__logo :global(svg) { width: 100%; height: 100%; display: block; }
   nav { display: flex; gap: 2rem; }
-  nav a { text-decoration: none; font-size: 0.85rem; color: var(--ink-2); transition: color 0.3s; }
-  nav a:hover { color: var(--ink); }
+  nav a { text-decoration: none; font-size: 0.9rem; color: var(--text-muted); transition: color var(--dur-1); }
+  nav a:hover { color: var(--text); }
   .actions { display: flex; align-items: center; gap: 1.2rem; }
-  .call { text-decoration: none; font-size: 0.85rem; color: var(--ink-2); }
-  .actions .btn { padding: 0.65rem 1.1rem; }
+  .call { text-decoration: none; font-size: 0.9rem; color: var(--text-muted); }
+  .actions .btn { padding: 0.7rem 1.2rem; }
   @media (max-width: 860px) { nav, .call { display: none; } }
 </style>
