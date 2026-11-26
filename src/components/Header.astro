@@ -1,0 +1,32 @@
+---
+const wa = 'https://wa.me/919701105981?text=Hi%20Homasm%20Interiors%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20services.';
+---
+<header class="site-header">
+  <a class="brand" href="/" aria-label="Homasm Interiors, home">HOMASM<span>Interiors</span></a>
+  <nav aria-label="Primary">
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#about">About</a>
+  </nav>
+  <div class="actions">
+    <a class="call" href="tel:+919701105981">+91 97011 05981</a>
+    <a class="btn btn--solid" href={wa} target="_blank" rel="noopener">WhatsApp us</a>
+  </div>
+</header>
+<style>
+  .site-header {
+    position: fixed; inset: 0 0 auto 0; z-index: 50; display: flex; align-items: center; justify-content: space-between;
+    gap: 1.5rem; padding: 1.1rem var(--gutter); mix-blend-mode: normal;
+    background: linear-gradient(to bottom, color-mix(in srgb, var(--bg) 85%, transparent), transparent);
+  }
+  .brand { text-decoration: none; font: 600 1.05rem/1 var(--sans); letter-spacing: 0.22em; display: flex; flex-direction: column; gap: 0.3rem; }
+  .brand span { font-weight: 400; font-size: 0.6rem; letter-spacing: 0.4em; color: var(--ink-2); text-transform: uppercase; }
+  nav { display: flex; gap: 2rem; }
+  nav a { text-decoration: none; font-size: 0.85rem; color: var(--ink-2); transition: color 0.3s; }
+  nav a:hover { color: var(--ink); }
+  .actions { display: flex; align-items: center; gap: 1.2rem; }
+  .call { text-decoration: none; font-size: 0.85rem; color: var(--ink-2); }
+  .actions .btn { padding: 0.65rem 1.1rem; }
+  @media (max-width: 860px) { nav, .call { display: none; } }
+</style>

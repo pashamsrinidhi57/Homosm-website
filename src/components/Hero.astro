@@ -1,0 +1,107 @@
+---
+const wa = 'https://wa.me/919701105981?text=Hi%20Homasm%20Interiors%2C%20I%20would%20like%20to%20know%20more%20about%20your%20interior%20design%20services.';
+// Each step owns a slice of scroll progress. Keep in sync with STAGES in src/scripts/hero-scene.ts
+const steps = [
+  { n: '01', t: 'Survey & plan', d: 'We measure the site, mark the layout and agree every line before a single wall goes up.' },
+  { n: '02', t: 'Foundation', d: 'A level, true base. Precision here saves weeks later.' },
+  { n: '03', t: 'Structure', d: 'Walls rise to plan, with openings placed for light and views.' },
+  { n: '04', t: 'Services', d: 'Electrical and plumbing routed and tested while the walls are still open.' },
+  { n: '05', t: 'Ceiling & cove', d: 'False ceilings and concealed cove lighting set the mood of every room.' },
+  { n: '06', t: 'Flooring', d: 'Real timber, laid and finished plank by plank.' },
+  { n: '07', t: 'Finishes', d: 'Plaster, paint, fluted wood panelling, glazing and curtains.' },
+  { n: '08', t: 'Furniture & styling', d: 'Made-to-fit pieces arrive, placed and styled.' },
+  { n: '09', t: 'Handover', d: 'Lights on. Keys in hand. No delays, no excuses.' },
+];
+---
+<section class="hero" id="hero" data-hero aria-label="From bare site to finished home">
+  <div class="hero__pin">
+    <canvas class="hero__canvas" data-canvas aria-hidden="true"></canvas>
+    <div class="hero__fallback" data-fallback aria-hidden="true"></div>
+
+    <div class="intro" data-intro>
+      <p class="eyebrow">Homasm Interiors · Hyderabad</p>
+      <h1>We build the room<br /><em>before you live in it.</em></h1>
+      <p class="hint"><span class="hint__line"></span>Scroll to build your home</p>
+    </div>
+
+    <ol class="steps" data-steps aria-label="Build stages">
+      {steps.map((s) => <li data-step><span>{s.n}</span>{s.t}</li>)}
+    </ol>
+
+    <div class="caption" data-caption aria-live="polite">
+      <span class="caption__num" data-cap-num>01</span>
+      <h2 data-cap-title>Survey &amp; plan</h2>
+      <p data-cap-desc>{steps[0].d}</p>
+    </div>
+    <script type="application/json" id="hero-steps" set:html={JSON.stringify(steps)} />
+
+    <div class="progress" aria-hidden="true"><i data-progress></i></div>
+
+    <div class="finale" data-finale>
+      <h2>Your home, <em>finished.</em></h2>
+      <p>Tell us about your space. We reply on WhatsApp the same day.</p>
+      <div class="finale__cta">
+        <a class="btn btn--solid" href={wa} target="_blank" rel="noopener">Chat on WhatsApp</a>
+        <a class="btn btn--ghost" href="tel:+919701105981">Call +91 97011 05981</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .hero { position: relative; height: 780vh; }
+  .hero__pin { position: sticky; top: 0; height: 100vh; height: 100svh; overflow: hidden; background: var(--bg); }
+  .hero__canvas, .hero__fallback { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+  .hero__fallback { display: none; background: radial-gradient(60% 50% at 50% 60%, #f7f3ea, var(--bg)); }
+  .hero.no-webgl .hero__canvas { display: none; }
+  .hero.no-webgl .hero__fallback { display: block; }
+
+  .eyebrow { font-size: 0.72rem; letter-spacing: 0.32em; text-transform: uppercase; color: var(--ink-2); margin: 0 0 1.4rem; }
+  .intro { position: absolute; left: var(--gutter); top: 50%; transform: translateY(-62%); max-width: 56rem; z-index: 5; will-change: opacity, transform; }
+  .intro h1 { font-size: clamp(2.4rem, 5.6vw, 5.2rem); line-height: 1.02; font-variation-settings: 'opsz' 144; }
+  em { font-style: italic; color: var(--accent); }
+  .hint { display: flex; align-items: center; gap: 0.9rem; margin: 2.2rem 0 0; font-size: 0.78rem; letter-spacing: 0.18em; text-transform: uppercase; color: var(--ink-2); }
+  .hint__line { width: 3rem; height: 1px; background: var(--ink-2); transform-origin: left; animation: line 2.4s var(--ease) infinite; }
+  @keyframes line { 0% { transform: scaleX(0); } 55% { transform: scaleX(1); } 100% { transform: scaleX(1); opacity: 0; } }
+
+  .steps { position: absolute; right: var(--gutter); top: 50%; transform: translateY(-50%); list-style: none; margin: 0; padding: 0; z-index: 4; display: grid; gap: 0.55rem; }
+  .steps li { display: flex; gap: 0.8rem; justify-content: flex-end; font-size: 0.74rem; letter-spacing: 0.04em; color: var(--ink-2); opacity: 0.38; transition: opacity 0.5s var(--ease), transform 0.5s var(--ease); }
+  .steps li span { font-variant-numeric: tabular-nums; opacity: 0.7; }
+  .steps li.is-done { opacity: 0.7; }
+  .steps li.is-active { opacity: 1; color: var(--ink); transform: translateX(-6px); font-weight: 500; }
+
+  .caption { position: absolute; left: var(--gutter); bottom: 3.2rem; max-width: 25rem; z-index: 4; opacity: 0; transform: translateY(14px); transition: opacity 0.6s var(--ease), transform 0.6s var(--ease); }
+  .caption.is-on { opacity: 1; transform: none; }
+  .caption__num { font-size: 0.74rem; letter-spacing: 0.3em; color: var(--accent); }
+  .caption h2 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); margin: 0.4rem 0 0.7rem; }
+  .caption p { margin: 0; color: var(--ink-2); font-size: 0.95rem; }
+  .caption.swap h2, .caption.swap p { opacity: 0; transform: translateY(8px); }
+  .caption h2, .caption p { transition: opacity 0.35s var(--ease), transform 0.35s var(--ease); }
+
+  .progress { position: absolute; left: 0; right: 0; bottom: 0; height: 3px; background: var(--line); z-index: 6; }
+  .progress i { display: block; height: 100%; width: 100%; background: var(--ink); transform-origin: left; transform: scaleX(0); }
+
+  .finale { position: absolute; right: var(--gutter); bottom: 2.4rem; max-width: 28rem; text-align: right; z-index: 6; opacity: 0; transform: translateY(18px); pointer-events: none; transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+  .finale.is-on { opacity: 1; transform: none; pointer-events: auto; }
+  .finale { padding: 1.6rem 1.8rem; border-radius: 20px; background: color-mix(in srgb, var(--bg) 82%, transparent); backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px); box-shadow: 0 1px 0 var(--line) inset; }
+  .hero.is-final .steps { opacity: 0; }
+  .steps { transition: opacity 0.6s var(--ease); }
+  @media (max-width: 1100px) { .steps { display: none; } }
+  .finale h2 { font-size: clamp(2rem, 4vw, 3.4rem); line-height: 1.05; }
+  .finale p { color: var(--ink-2); margin: 0.8rem 0 1.4rem; }
+  .finale__cta { display: flex; gap: 0.7rem; justify-content: flex-end; flex-wrap: wrap; }
+
+  @media (max-width: 760px) {
+    .steps { display: none; }
+    .caption { bottom: 1.6rem; right: var(--gutter); max-width: none; }
+    .finale { left: var(--gutter); right: var(--gutter); bottom: 1.6rem; max-width: none; text-align: left; }
+    .finale__cta { justify-content: flex-start; }
+    .intro { top: 34%; }
+  }
+  @media (prefers-reduced-motion: reduce) { .hint__line { animation: none; } }
+</style>
+
+<script>
+  import { initHero } from '../scripts/hero-scene';
+  initHero();
+</script>
